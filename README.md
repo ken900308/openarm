@@ -1,24 +1,24 @@
 # OpenArm Local Development Environment Guide
 
-這是一份針對 OpenArm 專案開發者的快速起步指南。本專案使用 Docker 容器封裝完整的 ROS 2 Humble 開發環境，確保所有人在不同硬體平台上都能得到一致的開發體驗。
+ OpenArm 專案開發環境。本專案使用 Docker 容器封裝完整的 ROS 2 Humble 開發環境。
 
 ## 📦 環境包含
 
 - **ROS 2 Humble Desktop Full**（含 Rviz2、MoveIt2 等工具）
-- **Intel RealSense SDK v2.56.1**（從原始碼編譯，與工作區 `realsense-ros r/4.56.1` 完全對齊）
-- **PyTorch**（預設安裝 CUDA 12.8 版本；如需不同版本，請修改 `docker/dockerfile.openarm` 中的 `--index-url`）
+- **Intel RealSense SDK v2.56.1**
+- **PyTorch**（預設安裝 CUDA 12.8 版本；不同版本，請修改 `docker/dockerfile.openarm` 中的 `--index-url`）
 
 ---
 
 ## 🚀 1. 啟動並進入開發環境
 
-每次要開始開發時，請在 `projects/` 根目錄執行啟動腳本：
+開發前，請在 `openarm/` 根目錄執行啟動腳本：
 
 ```bash
 source run.sh
 ```
 
-> 這個腳本會自動判斷 Docker Image 是否已建立，若未建立則先執行 Build 再啟動。本機的 `projects/` 資料夾會掛載至容器內的 `/root/projects`，可以在容器內外自由編輯程式碼，檔案即時同步。
+> 這個腳本會自動判斷 Docker Image 是否已建立，若未建立則會先執行 Build 再啟動。本機的 `openarm/` 資料夾會掛載至容器內的 `/root/openarm`。
 
 ---
 
@@ -27,7 +27,7 @@ source run.sh
 進入容器後（提示字元變為 `root@docker-desktop` 或類似），請使用我們提供的專用編譯腳本：
 
 ```bash
-cd /root/projects/ros2_ws
+cd /root/openarm/ros2_ws
 bash ../colcon_build.sh
 ```
 
@@ -43,10 +43,10 @@ bash ../colcon_build.sh
 
 ## 🌐 3. 設定 ROS 2 Domain ID
 
-執行任何 `ros2 run` 或 `ros2 launch` 前，請設定 ROS 2 網路隔離：
+執行任何 `ros2 run` 或 `ros2 launch` 前，請設定 ROS 2 DOMAIN ID：
 
 ```bash
-source /root/projects/environment.sh <ROS_DOMAIN_ID>
+source /root/openarm/environment.sh <ROS_DOMAIN_ID>
 ```
 
 - 若未輸入 ID，預設使用 `ROS_DOMAIN_ID=0`
@@ -59,7 +59,7 @@ source /root/projects/environment.sh <ROS_DOMAIN_ID>
 所有前置作業完成後，即可啟動所需節點。例如測試 MoveIt2 雙臂控制：
 
 ```bash
-cd /root/projects/ros2_ws && source install/setup.bash
+cd /root/openarm/ros2_ws && source install/setup.bash
 ros2 launch openarm_bimanual_moveit_config demo.launch.py
 ```
 
@@ -78,6 +78,25 @@ ros2 launch openarm_bimanual_moveit_config demo.launch.py
 | `docker/docker-compose.openarm.yml` | Docker Compose 設定（Volume 掛載、GPU 等） |
 | `ros2_ws/src/` | ROS 2 工作區原始碼（openarm_ros2、realsense-ros 等） |
 
----
+### 目錄結構
 
-祝開發順利！
+```text
+openarm/
+├── docker
+│   ├── docker-compose.openarm.yml
+│   └── dockerfile.openarm
+├── ros2_ws
+│   └── src
+│       ├── openarm_can
+│       ├── openarm_description
+│       ├── openarm_isaac_lab
+│       ├── openarm_ros2
+│       ├── openarm_teleop
+│       └── realsense-ros
+├── run.sh
+├── colcon_build.sh
+├── README.md
+└── environment.sh
+```
+
+---
