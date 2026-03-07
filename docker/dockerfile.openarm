@@ -77,7 +77,7 @@ WORKDIR /root
 # ---- Quality-of-life bashrc ----
 # Include sourcing the openarm workspace if it has been built
 RUN echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc \
-    && echo 'if [ -f /root/projects/ros2_ws/install/setup.bash ]; then source /root/projects/ros2_ws/install/setup.bash; fi' >> ~/.bashrc \
+    && echo 'if [ -f /root/openarm/ros2_ws/install/setup.bash ]; then source /root/openarm/ros2_ws/install/setup.bash; fi' >> ~/.bashrc \
     && echo 'export HISTSIZE=50000' >> ~/.bashrc \
     && echo 'export HISTFILESIZE=100000' >> ~/.bashrc \
     && echo 'shopt -s histappend' >> ~/.bashrc \

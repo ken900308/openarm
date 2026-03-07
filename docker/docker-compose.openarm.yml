@@ -21,9 +21,8 @@ services:
     volumes:
       # Mount X11 socket for GUI applications (e.g., rviz2)
       - /tmp/.X11-unix:/tmp/.X11-unix
-      # Mount the entire projects folder from host to container for local development
-      # The user has structured everything cleanly inside projects/
-      - ../:/root/projects
+      # Mount the entire openarm folder from host to container for local development
+      - ../:/root/openarm
     deploy:
       resources:
         reservations:

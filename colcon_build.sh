@@ -6,7 +6,7 @@
 # （Ubuntu 22.04 內建的 setuptools 太舊，不支援 --editable，會導致 Python 套件安裝失敗）
 
 # 確保永遠在正確的 ROS 2 工作區內執行，避免 build/ install/ 產生在專案根目錄
-cd /root/projects/ros2_ws || { echo "錯誤：找不到 /root/projects/ros2_ws 目錄！"; return 1 2>/dev/null || exit 1; }
+cd /root/openarm/ros2_ws || { echo "錯誤：找不到 /root/openarm/ros2_ws 目錄！"; return 1 2>/dev/null || exit 1; }
 
 echo "📦 升級 Python setuptools..."
 pip install -q --upgrade setuptools
