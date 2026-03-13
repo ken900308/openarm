@@ -24,5 +24,6 @@ __pycache__/
 ehthumbs.db
 Thumbs.db
 
-# QA files
+# dev record files
 question_asked.md
+To-Do-List.md
